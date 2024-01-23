@@ -22,6 +22,7 @@ int pos_down = 0;
 int need_pos = 0;
 
 void setup() {
+ Serial.begin(115200);
 pinMode(PHOTO_SENS_1, INPUT);
 pinMode(PHOTO_SENS_2, INPUT);
 pinMode(PHOTO_SENS_3, INPUT);
@@ -46,8 +47,25 @@ sens_3 = analogRead(PHOTO_SENS_3);
 sens_4 = analogRead(PHOTO_SENS_4);
 
 digitalWrite(PHOTO_ENABLE, LOW);
-
+debug_print();
 sens_plat_1 = analogRead(PHOTO_SENS_PLAT_1);
 sens_plat_2 = analogRead(PHOTO_SENS_PLAT_2);
 delay(1000);
+}
+
+
+void debug_print(void)
+{
+  Serial.print(sens_1);
+Serial.print(" ");
+Serial.print(sens_2);
+Serial.print(" ");
+Serial.print(sens_3);
+Serial.print(" ");
+Serial.print(sens_4);
+Serial.print(" ");
+Serial.print(sens_plat_1);
+Serial.print(" ");
+Serial.print(sens_plat_1);
+Serial.print(" ");
 }

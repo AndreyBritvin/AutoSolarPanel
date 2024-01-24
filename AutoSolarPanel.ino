@@ -32,7 +32,7 @@ pinMode(PHOTO_SENS_5, INPUT_PULLUP);
 pinMode(PHOTO_SENS_6, INPUT_PULLUP);
 
 pinMode(PHOTO_ENABLE, OUTPUT);
-digitalWrite(PHOTO_ENABLE, LOW);
+digitalWrite(PHOTO_ENABLE, HIGH);
 
 myservo_down.attach(SERVO_DOWN_PIN);
 myservo_up.attach(SERVO_UP_PIN);
@@ -48,7 +48,7 @@ delay(1000);
 void get_sens_data(void)
 {
   
-digitalWrite(PHOTO_ENABLE, HIGH);
+digitalWrite(PHOTO_ENABLE, LOW);
 delay(15);
 sens_1 = analogRead(PHOTO_SENS_1);
 sens_2 = analogRead(PHOTO_SENS_2);
@@ -56,7 +56,7 @@ sens_3 = analogRead(PHOTO_SENS_3);
 sens_4 = analogRead(PHOTO_SENS_4);
 sens_5 = analogRead(PHOTO_SENS_5);
 sens_6 = analogRead(PHOTO_SENS_6);
-digitalWrite(PHOTO_ENABLE, LOW);
+digitalWrite(PHOTO_ENABLE, HIGH);
 }
 
 void debug_print(void)

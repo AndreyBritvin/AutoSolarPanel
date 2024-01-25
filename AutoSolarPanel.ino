@@ -14,8 +14,8 @@ int sens_1, sens_2, sens_3, sens_4, sens_5, sens_6;
 
 #include <Servo.h>
 
-Servo myservo_down;
-Servo myservo_up;
+Servo servo_down;
+Servo servo_up;
 int pos_up = 0;
 int pos_down = 0;
 
@@ -34,15 +34,34 @@ pinMode(PHOTO_SENS_6, INPUT_PULLUP);
 pinMode(PHOTO_ENABLE, OUTPUT);
 digitalWrite(PHOTO_ENABLE, HIGH);
 
-myservo_down.attach(SERVO_DOWN_PIN);
-myservo_up.attach(SERVO_UP_PIN);
+servo_down.attach(SERVO_DOWN_PIN);
+servo_up.attach(SERVO_UP_PIN);
 }
 
 void loop() {
  get_sens_data();
 debug_print();
 calc_pos();
+rotate_servo(); // TODO!!! map values, 
 delay(1000);
+}
+
+void rotate_servo()
+{
+  if(need_pos>180)
+  {
+    servo_down.write(180);
+    delay(500);
+    servo_up.write(need_pos-180);
+    delay(500);
+  }
+  else
+  {
+    servo_up.write(0);
+    delay(500);
+    servo_down.write(need_pos);
+    delay(500);
+  }
 }
 
 int max_value;
@@ -84,27 +103,27 @@ void calc_pos(void)
 
 int max_val(int s1, int s2, int s3, int s4, int s5, int s6)
 {
-  if (s1>=s2 and s1>=s3 and s1>=s4 and s1>=s5 and s1>=s6)
+  if (s1<=s2 and s1<=s3 and s1<=s4 and s1<=s5 and s1<=s6)
   {
     return s1;
   }
-  if (s2>=s1 and s2>=s3 and s2>=s4 and s2>=s5 and s2>=s6)
+  if (s2<=s1 and s2<=s3 and s2<=s4 and s2<=s5 and s2<=s6)
   {
     return s2;
   }
-  if (s3>=s2 and s3>=s1 and s3>=s4 and s3>=s5 and s3>=s6)
+  if (s3<=s2 and s3<=s1 and s3<=s4 and s3<=s5 and s3<=s6)
   {
     return s3;
   }
-  if (s4>=s2 and s4>=s3 and s4>=s1 and s4>=s5 and s4>=s6)
+  if (s4<=s2 and s4<=s3 and s4<=s1 and s4<=s5 and s4<=s6)
   {
     return s4;
   }
-  if (s5>=s2 and s5>=s3 and s5>=s4 and s5>=s1 and s5>=s6)
+  if (s5<=s2 and s5<=s3 and s5<=s4 and s5<=s1 and s5<=s6)
   {
     return s5;
   }
-  if (s6>=s2 and s6>=s3 and s6>=s4 and s6>=s5 and s6>=s1)
+  if (s6<=s2 and s6<=s3 and s6<=s4 and s6<=s5 and s6<=s1)
   {
     return s6;
   }
@@ -136,5 +155,7 @@ Serial.print(" ");
 Serial.print(sens_5);
 Serial.print(" ");
 Serial.print(sens_6);
+Serial.println(" ");
+Serial.print(need_pos);
 Serial.println(" ");
 }
